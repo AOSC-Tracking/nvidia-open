@@ -65,7 +65,8 @@
  * define stubs to return errors.
  */
 #if defined(NV_CRYPTO_PRESENT) && defined (NV_CONFIG_CRYPTO_PRESENT)
-#define USE_LKCA 1
+// AOSC OS: 6b34562f0cfe ("crypto: akcipher - Drop sign/verify operations") breaks LKCA
+// #define USE_LKCA 1
 #endif
 
 #ifdef USE_LKCA
