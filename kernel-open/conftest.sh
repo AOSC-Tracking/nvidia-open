@@ -7193,6 +7193,21 @@ compile_test() {
             compile_check_conftest "$CODE" "NV_FOLIO_TEST_SWAPCACHE_PRESENT" "" "functions"
         ;;
 
+    module_import_ns_string)
+            #
+            # Determine if the MODULE_IMPORT_NS() macro accepts string literal.
+            #
+            # Changed in cdd30ebb1b9f ("module: Convert symbol namespace to string literal") in 6.13-rc2
+            #
+            CODE="
+            #include <linux/module.h>
+            MODULE_IMPORT_NS(\"DMA_BUF\");
+            void conftest_module_import_ns_string(void) {
+            }"
+
+            compile_check_conftest "$CODE" "NV_MODULE_IMPORT_NS_STRING" "" "types"
+        ;;
+
         # When adding a new conftest entry, please use the correct format for
         # specifying the relevant upstream Linux kernel commit.  Please
         # avoid specifying -rc kernels, and only use SHAs that actually exist
