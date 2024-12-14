@@ -40,13 +40,15 @@ NV_KERNEL_MODULE_TARGETS += $(NVIDIA_MODESET_KO)
 NVIDIA_MODESET_BINARY_OBJECT := $(src)/nvidia-modeset/nv-modeset-kernel.o_binary
 NVIDIA_MODESET_BINARY_OBJECT_O := nvidia-modeset/nv-modeset-kernel.o
 
-quiet_cmd_symlink = SYMLINK $@
-cmd_symlink = ln -sf $< $@
+# Rel. commit 80f289101690 "kbuild: change working directory to external module directory with M=" (Masahiro Yamada, 10 Nov 2024)
+# Ensure `$<` is absolute, since the link target is resolved relative to its path, not from where `ln` is run from.
+quiet_cmd_symlinkabs = SYMLINK $@
+cmd_symlinkabs = ln -sf $(abspath $<) $@
 
 targets += $(NVIDIA_MODESET_BINARY_OBJECT_O)
 
 $(obj)/$(NVIDIA_MODESET_BINARY_OBJECT_O): $(NVIDIA_MODESET_BINARY_OBJECT) FORCE
-	$(call if_changed,symlink)
+	$(call if_changed,symlinkabs)
 
 nvidia-modeset-y += $(NVIDIA_MODESET_BINARY_OBJECT_O)
 
