@@ -39,8 +39,12 @@ MODULE_PARM_DESC(
     fbdev,
     "Create a framebuffer device (1 = enable, 0 = disable (default)) (EXPERIMENTAL)");
 module_param_named(fbdev, nv_drm_fbdev_module_param, bool, 0400);
+#else
+#error "AOSC OS: nvidia-drm fbdev should always be available."
 #endif
 
+#else
+#error "AOSC OS: nvidia-drm is not available"
 #endif /* NV_DRM_AVAILABLE */
 
 /*************************************************************************
